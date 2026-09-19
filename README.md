@@ -1,5 +1,7 @@
 # Codex Usage
 
+**English** | [Русский](README.ru.md)
+
 Local usage analytics and API-equivalent cost reporting for OpenAI Codex.
 
 Codex Usage reads the local Codex SQLite database and rollout telemetry, reconstructs root-agent and subagent activity, and generates an Excel dashboard with token usage, cache efficiency, task economics, and estimated API-equivalent costs.
