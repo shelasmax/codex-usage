@@ -1,0 +1,62 @@
+# API-equivalent pricing used for cost estimation.
+#
+# Prices are USD per 1 million tokens.
+# These rates do NOT represent subscription-plan billing.
+#
+# Source:
+# OpenAI ChatGPT Work / Codex token-based rate card
+#
+# Verified: 2026-09-20
+#
+# Limitations:
+# - long-context surcharges are not currently applied
+# - unknown internal models remain unpriced
+# - tool-specific charges are not included
+
+verified_at: "2026-09-20"
+
+models:
+  gpt-6-astra:
+    input: 10.00
+    cached_input: 1.00
+    output: 50.00
+
+  gpt-5.6-sol:
+    input: 4.00
+    cached_input: 0.40
+    output: 20.00
+
+  gpt-5.6-terra:
+    input: 2.00
+    cached_input: 0.20
+    output: 12.00
+
+  gpt-5.6-luna:
+    input: 0.20
+    cached_input: 0.02
+    output: 1.20
+
+  gpt-5.5:
+    input: 5.00
+    cached_input: 0.50
+    output: 30.00
+
+  gpt-5.4:
+    input: 2.50
+    cached_input: 0.25
+    output: 15.00
+
+  gpt-5.4-mini:
+    input: 0.75
+    cached_input: 0.075
+    output: 4.50
+
+  gpt-5.3-codex:
+    input: 1.75
+    cached_input: 0.175
+    output: 14.00
+
+  gpt-5.2:
+    input: 1.75
+    cached_input: 0.175
+    output: 14.00

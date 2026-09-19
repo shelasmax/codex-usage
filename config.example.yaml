@@ -1,0 +1,24 @@
+# Local timezone used for daily / weekly / monthly aggregation.
+timezone: "Europe/Moscow"
+
+codex:
+  # Default location of the local Codex state database.
+  database: "~/.codex/state_5.sqlite"
+
+output:
+  # Generated Excel report.
+  excel: "output/Codex_Usage.xlsx"
+
+pricing:
+  # USD to local currency conversion rate.
+  # Update this manually when you want current RUB estimates.
+  usd_rub: 84.20
+
+# Optional friendly names for Codex working directories.
+#
+# Codex Usage discovers all cwd values automatically.
+# Add aliases only when you want several paths to have
+# clearer names in the report.
+project_aliases:
+  "/Users/yourname/Documents/Projects/example-project": "Example Project"
+  "/Users/yourname/Documents/Projects/example-project/design": "Example Project / Design"
