@@ -172,6 +172,59 @@ python inspect_daily.py
 python inspect_tasks.py
 ```
 
+## Сравнение периодов использования
+
+Можно сравнить два периода работы Codex, чтобы исследовать влияние модели, reasoning effort, orchestration агентов или причины аномально высокого расхода.
+
+```bash
+python compare_periods.py \
+  --a-start "2026-01-01T09:00:00" \
+  --a-end "2026-01-01T17:00:00" \
+  --b-start "2026-01-08T09:00:00" \
+  --b-end "2026-01-08T17:00:00" \
+  --a-label "До" \
+  --b-label "После"
+```
+
+Сравнение включает:
+
+- total, input, cached, uncached, output и reasoning tokens
+- API-equivalent стоимость
+- ROOT vs SUBAGENT
+- Model × Reasoning Effort × Role
+- оценку активного времени работы
+- tokens и calls на активный час
+- использование по проектам
+- концентрацию расхода по задачам
+- количество активных child agents и fan-out
+- самые ресурсоёмкие задачи с разделением direct/subagent usage
+
+### Оценка активного времени
+
+По умолчанию пауза более 30 минут между token events считается началом новой active session.
+
+Порог можно изменить:
+
+```bash
+python compare_periods.py \
+  ... \
+  --active-gap 60
+```
+
+Active time — расчётная метрика на основе telemetry Codex. Она не означает фактическое время пользователя за компьютером.
+
+### Для чего это полезно
+
+Сравнение периодов позволяет исследовать:
+
+- Medium vs High/XHigh reasoning effort
+- разные конфигурации моделей
+- изменение стратегии subagents
+- эффект изменений orchestration
+- аномально быстрое расходование allowance
+- высокий agent fan-out
+- слишком долгоживущие root sessions
+
 ## Методика оценки стоимости
 
 Для модели с известным тарифом:

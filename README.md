@@ -150,6 +150,58 @@ Inspect reconstructed task economics:
 ```bash
 python inspect_tasks.py
 ```
+## Compare usage periods
+
+Compare two Codex usage periods to investigate changes in model configuration, reasoning effort, agent orchestration, or unusually high usage.
+
+```bash
+python compare_periods.py \
+  --a-start "2026-01-01T09:00:00" \
+  --a-end "2026-01-01T17:00:00" \
+  --b-start "2026-01-08T09:00:00" \
+  --b-end "2026-01-08T17:00:00" \
+  --a-label "Before" \
+  --b-label "After"
+```
+
+The comparison includes:
+
+- total, input, cached, uncached, output, and reasoning tokens
+- API-equivalent cost
+- root vs subagent usage
+- model × reasoning-effort × role breakdown
+- active working time and usage intensity
+- tokens and calls per active hour
+- project-level usage
+- task concentration
+- active child agents and fan-out
+- top tasks with direct and subagent token usage
+
+### Active-time estimation
+
+By default, a gap of more than 30 minutes between token events starts a new active session.
+
+You can change the threshold:
+
+```bash
+python compare_periods.py \
+  ... \
+  --active-gap 60
+```
+
+Active time is an estimate derived from Codex telemetry. It does not represent the user's actual time at the computer.
+
+### Example use cases
+
+Period comparison can help investigate:
+
+- Medium vs High/XHigh reasoning effort
+- different model configurations
+- changes in subagent strategy
+- before/after orchestration changes
+- unusually fast allowance consumption
+- high agent fan-out
+- long-running root sessions
 
 ## Cost-estimation methodology
 
