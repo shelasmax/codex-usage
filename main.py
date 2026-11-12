@@ -1,4 +1,4 @@
-from codex_usage.rollouts import iter_usage_events
+from codex_usage.rollouts import iter_usage_events, resolve_rollout_path
 
 from pathlib import Path
 
@@ -69,9 +69,7 @@ def main() -> None:
     for thread in threads:
         rollout_path = thread["rollout_path"]
 
-        if not rollout_path or not Path(
-            rollout_path
-        ).expanduser().is_file():
+        if not rollout_path or resolve_rollout_path(rollout_path) is None:
             missing_rollouts += 1
             continue
 

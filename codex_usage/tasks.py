@@ -90,7 +90,7 @@ def build_task_rows(
 
         stats = TokenStats()
 
-        if path and Path(path).expanduser().is_file():
+        if path:
             for event in iter_usage_events(path):
                 stats.add_event(event)
 

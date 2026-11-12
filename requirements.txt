@@ -1,2 +1,4 @@
 openpyxl==3.1.5
 PyYAML==6.0.3
+zstandard==0.25.0
+tzdata==2026.6; sys_platform == "win32"

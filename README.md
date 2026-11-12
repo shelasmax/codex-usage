@@ -75,6 +75,18 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+On Windows PowerShell, use Python UTF-8 mode and the Windows virtual environment:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+Copy-Item config.example.yaml config.yaml
+.\.venv\Scripts\python.exe -X utf8 build_excel.py
+```
+
+Rollouts can be JSONL or Zstandard-compressed JSONL. If a recorded session path
+no longer exists, its compressed or archived counterpart is considered.
+
 ## Configuration
 
 Copy the example configuration:

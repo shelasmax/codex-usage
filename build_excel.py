@@ -311,7 +311,7 @@ def main() -> None:
 
     print(
         f"Base-rate RUB:     "
-        f"{total_cost_rub:,.2f} ₽"
+        f"{total_cost_rub:,.2f} RUB"
     )
 
     print()

@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import io
 import json
+
+import zstandard
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -70,7 +73,12 @@ def make_usage_event(
 def load_jsonl(path: Path) -> list[dict]:
     events = []
 
-    with path.open("r", encoding="utf-8") as file:
+    if path.suffix == ".zst":
+        file = io.TextIOWrapper(zstandard.open(path, "rb"), encoding="utf-8")
+    else:
+        file = path.open("r", encoding="utf-8")
+
+    with file:
         for line in file:
             try:
                 events.append(json.loads(line))
@@ -78,6 +86,26 @@ def load_jsonl(path: Path) -> list[dict]:
                 continue
 
     return events
+
+
+def resolve_rollout_path(rollout_path: str | Path) -> Path | None:
+    """Resolve a recorded path or its compressed/archived counterpart."""
+    path = Path(rollout_path).expanduser()
+    if path.is_file():
+        return path
+
+    candidates = [Path(str(path) + ".zst")]
+    # Infer CODEX_HOME from the recorded path, including non-default homes.
+    for parent in path.parents:
+        if parent.name in {"sessions", "archived_sessions"}:
+            archive = parent.parent / "archived_sessions"
+            candidates.extend([archive / path.name, archive / (path.name + ".zst")])
+            break
+
+    matches = list(dict.fromkeys(p for p in candidates if p.is_file()))
+    if len(matches) > 1:
+        raise RuntimeError(f"Ambiguous rollout path: {path}")
+    return matches[0] if matches else None
 
 
 def iter_usage_events(
@@ -108,9 +136,9 @@ def iter_usage_events(
     intentionally never summed.
     """
 
-    path = Path(rollout_path).expanduser()
+    path = resolve_rollout_path(rollout_path)
 
-    if not path.is_file():
+    if path is None:
         return
 
     events = load_jsonl(path)
